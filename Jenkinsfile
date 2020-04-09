@@ -48,7 +48,9 @@ pipeline{
              script {
                 echo "====Waiting for Approval===="
                 GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+                GIT_COMMIT_MESSAGE = sh (script: "git log -n 1 --pretty=format:'%s'", returnStdout: true)
                 echo "test ${GIT_COMMIT_HASH}"
+                echo "test ${GIT_COMMIT_MESSAGE}"
                 emailext mimeType: 'text/html',
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
@@ -81,7 +83,11 @@ pipeline{
                                     </tr>
                                     <tr>
                                         <td>Git_commit_ID:</td>
-                                        <td>${GIT_COMMIT_HASH}</td>
+                                        <td>echo "${GIT_COMMIT_HASH}"</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Git_commit_Message:</td>
+                                        <td>echo "${GIT_COMMIT_MESSAGE}"</td>
                                     </tr>
                                 </table>
                               <br />
