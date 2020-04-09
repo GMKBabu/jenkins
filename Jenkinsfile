@@ -49,19 +49,51 @@ pipeline{
                 emailext mimeType: 'text/html',
                          subject: "[Jenkins]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
-                         body: '''<a href="${BUILD_URL}input">click to approve</a>'''
+                         body: '''<style>
+                            body, table, td, th, p {
+                                font-family:verdana,helvetica,sans serif;
+                                font-size:11px;
+                                color:black;
+                                }
+                            td.bg1 { color:white; background-color:#595959; font-size:120% }
+                            td.console { font-family:courier new, lucida console; }
+                            </style>
+                            <body>
+                                <table border=2 cellspacing=2 cellpadding=2 width="40%">
+                                    <tr>
+                                        <td align="left" width="40%">
+                                           <b style="font-size: 170%;">GMKBabu</b>
+                                        </td>
+                                        <td valign="center" width="60%">
+                                           <b style="font-size: 150%;">CICD Pipeline Information</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                       <td>URL:</td>
+                                       <td><a href='${BUILD_URL}'>${JOB_NAME}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>BuildNumber:</td>
+                                        <td>${CUSTOM_BUILD_NUMBER}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>JobName:</td>
+                                        <td>${JOB_NAME}</td>
+                                    </tr>
+                                </table>
+                              <br />
+                            </body>'''
                 def userInput = input id: 'userInput',
                           message: 'Let\'s promote?', 
                           submitterParameter: 'submitter',
                           submitter: 'GMKBabu',
                           parameters: [
-                              [$class: 'TextParameterDefinition', defaultValue: 'sit', description: 'Environment', name: 'env'],
+                              [$class: 'TextParameterDefinition', defaultValue: 'prod', description: 'Environment', name: 'env'],
                               [$class: 'TextParameterDefinition', defaultValue: 'k8s', description: 'Target', name: 'target']]
                 echo ("Env: "+userInput['env'])
                 echo ("Target: "+userInput['target'])
                 echo ("submitted by: "+userInput['submitter'])
              }
-
             }
         }
         stage("Deploy") {
