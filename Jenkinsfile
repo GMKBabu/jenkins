@@ -70,7 +70,7 @@ pipeline{
                                     </tr>
                                     <tr>
                                        <td>URL:</td>
-                                       <td><a href='${BUILD_URL}'>${JOB_NAME}</a></td>
+                                       <td><a href="${BUILD_URL}input">click to approve</a></td>
                                     </tr>
                                     <tr>
                                         <td>BuildNumber:</td>
