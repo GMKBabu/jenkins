@@ -8,6 +8,8 @@ pipeline{
         CUSTOM_TAG = "${COMMIT_ID}"
         IMAGE_NAME = "${IMAGE_REPO_NAME}:${CUSTOM_TAG}"
         CUSTOM_BUILD_NUMBER = "DEV-PRD-${BUILD_NUMBER}"
+        GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+        GIT_COMMIT_MESSAGE = sh (script: "git log -n 1 --pretty=format:'%s'", returnStdout: true)
     }
     parameters {
         string (name: 'GITHUB_BRANCH_NAME', defaultValue: 'master', description: 'Git branch to build')
@@ -47,8 +49,8 @@ pipeline{
             steps{
              script {
                 echo "====Waiting for Approval===="
-                GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-                GIT_COMMIT_MESSAGE = sh (script: "git log -n 1 --pretty=format:'%s'", returnStdout: true)
+               // GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+               // GIT_COMMIT_MESSAGE = sh (script: "git log -n 1 --pretty=format:'%s'", returnStdout: true)
                 echo "git commit id ${GIT_COMMIT_HASH}"
                 echo "git commit message ${GIT_COMMIT_MESSAGE}"
                 emailext mimeType: 'text/html',
