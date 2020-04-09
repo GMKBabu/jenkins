@@ -49,8 +49,8 @@ pipeline{
                 echo "====Waiting for Approval===="
                 GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
                 GIT_COMMIT_MESSAGE = sh (script: "git log -n 1 --pretty=format:'%s'", returnStdout: true)
-                echo "test ${GIT_COMMIT_HASH}"
-                echo "test ${GIT_COMMIT_MESSAGE}"
+                echo "git commit id ${GIT_COMMIT_HASH}"
+                echo "git commit message ${GIT_COMMIT_MESSAGE}"
                 emailext mimeType: 'text/html',
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
@@ -74,20 +74,20 @@ pipeline{
                                         </td>
                                     </tr>
                                     <tr>
-                                       <td>URL:</td>
-                                       <td><a href="${BUILD_URL}input">click to approve</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>JobName:</td>
-                                        <td>${JOB_NAME}</td>
+                                        <td>Git_commit_Message:</td>
+                                        <td>echo "${GIT_COMMIT_MESSAGE}"</td>
                                     </tr>
                                     <tr>
                                         <td>Git_commit_ID:</td>
                                         <td>echo "${GIT_COMMIT_HASH}"</td>
                                     </tr>
                                     <tr>
-                                        <td>Git_commit_Message:</td>
-                                        <td>echo "${GIT_COMMIT_MESSAGE}"</td>
+                                       <td>URL:</td>
+                                       <td><a href="${BUILD_URL}input">click to approve</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>JobName:</td>
+                                        <td>${JOB_NAME}</td>
                                     </tr>
                                 </table>
                               <br />
