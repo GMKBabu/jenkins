@@ -77,7 +77,7 @@ pipeline{
                                     </tr>
                                     <tr>
                                         <td>Git_commit_Message</td>
-                                        <td>${GIT_COMMIT_MESSAGE}</td>
+                                        <td>${GIT_COMMIT}</td>
                                     </tr>
                                     <tr>
                                         <td>Git_commit_ID:</td>
