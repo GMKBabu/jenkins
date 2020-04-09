@@ -47,7 +47,7 @@ pipeline{
              script {
                 echo "====Waiting for Approval===="
                 emailext mimeType: 'text/html',
-                         subject: "[Jenkins]${currentBuild.fullDisplayName}",
+                         subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
                          body: '''<style>
                             body, table, td, th, p {
@@ -74,7 +74,7 @@ pipeline{
                                     </tr>
                                     <tr>
                                         <td>BuildNumber:</td>
-                                        <td>${CUSTOM_BUILD_NUMBER}</td>
+                                        <td>${currentBuild.fullDisplayName}</td>
                                     </tr>
                                     <tr>
                                         <td>JobName:</td>
