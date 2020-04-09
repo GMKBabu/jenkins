@@ -76,12 +76,12 @@ pipeline{
                                        <td><a href="${BUILD_URL}input">click to approve</a></td>
                                     </tr>
                                     <tr>
-                                        <td>BuildNumber:</td>
-                                        <td>"${GIT_COMMIT_HASH}"</td>
-                                    </tr>
-                                    <tr>
                                         <td>JobName:</td>
                                         <td>${JOB_NAME}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Git_commit_ID:</td>
+                                        <td>${GIT_COMMIT_HASH}</td>
                                     </tr>
                                 </table>
                               <br />
