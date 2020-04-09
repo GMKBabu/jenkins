@@ -39,6 +39,7 @@ pipeline{
         stage("Build Docker Image"){
             steps{
                 echo "====executing Build Docker Image===="
+
             }
         }
 
@@ -46,6 +47,8 @@ pipeline{
             steps{
              script {
                 echo "====Waiting for Approval===="
+                GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+                echo "test ${GIT_COMMIT_HASH}"
                 emailext mimeType: 'text/html',
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
@@ -74,7 +77,7 @@ pipeline{
                                     </tr>
                                     <tr>
                                         <td>BuildNumber:</td>
-                                        <td>${currentBuild.fullDisplayName}</td>
+                                        <td>"${GIT_COMMIT_HASH}"</td>
                                     </tr>
                                     <tr>
                                         <td>JobName:</td>
