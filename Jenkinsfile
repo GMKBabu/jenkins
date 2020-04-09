@@ -74,12 +74,12 @@ pipeline{
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Git_commit_Message:</td>
-                                        <td>echo "${GIT_COMMIT_MESSAGE}"</td>
+                                        <td>Git_commit_Message</td>
+                                        <td>${GIT_COMMIT_MESSAGE}</td>
                                     </tr>
                                     <tr>
                                         <td>Git_commit_ID:</td>
-                                        <td>echo "${GIT_COMMIT_HASH}"</td>
+                                        <td>${GIT_COMMIT_HASH}</td>
                                     </tr>
                                     <tr>
                                        <td>URL:</td>
