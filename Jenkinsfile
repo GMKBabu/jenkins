@@ -110,7 +110,7 @@ pipeline{
                                     <table>
                                           <tr style="background-color:white;color:black;">
                                               <th>&#9658;</th>
-                                              <th style="text-decoration: underline;color:blue;"><strong><a href="279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}"</a>279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}</strong></th>
+                                              <th style="text-decoration: underline;color:blue;"><strong><a href="279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}">279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}</a></strong></th>
                                           </tr>
                                     </table>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD INFORMATION:</strong></p>
@@ -183,7 +183,7 @@ pipeline{
 }
 def NotifyEmail() {
         emailext mimeType: 'text/html',
-                   to: "rajababu.irpa@trulytravel.tech",
+                   to: "babu.m@connectio.co.in",
                    subject: "Status: ${currentBuild.result}",
                    attachLog: true,
                    body: """<style>
@@ -217,7 +217,7 @@ def NotifyEmail() {
                                       </tr>
                                     </table>
                                     <p><strong>Build URL: </strong> ${BUILD_URL}</p>
-                                    <p><strong>Project: </strong> ${currentBuild.fullDisplayName}</p>
+                                    <p><strong>Project:</strong> ${currentBuild.fullDisplayName}</p>
                                     <p><strong>Date of Build:</strong> <span id="dtText"></span></p>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>CHANGES:</strong></p>
                                     <p> &#9658; <span id="Babu"></span></P>
@@ -237,7 +237,7 @@ def NotifyEmail() {
                                     <table>
                                           <tr style="background-color:white;color:black;">
                                               <th>&#9658;</th>
-                                              <th style="text-decoration: underline;color:blue;"><strong><a href="279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}"</a>279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}</strong></th>
+                                              <th style="text-decoration: underline;color:blue;"><strong><a href="279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}">279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}</a></strong></th>
                                           </tr>
                                     </table>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD INFORMATION:</strong></p>
