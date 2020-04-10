@@ -183,7 +183,7 @@ pipeline{
 }
 def NotifyEmail() {
         emailext mimeType: 'text/html',
-                   to: "babu.m@connectio.co.in",
+                   to: "rajababu.irpa@trulytravel.tech",
                    subject: "Status: ${currentBuild.result}",
                    attachLog: true,
                    body: """<style>
