@@ -114,7 +114,7 @@ pipeline{
                                           </tr>
                                     </table>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD INFORMATION:</strong></p>
-                                    <table id="customers" style="width:100%;border: 2px solid black;border-collapse: collapse;">
+                                    <table id="customers" style="width:100%;border: 2px solid black;border-collapse: separate;">
                                         <tr style="border: 2px solid black;background-color:blue;color:white;">
                                             <th id="tableheader" style="width:30%;border: 2px solid black;border-collapse: collapse;" >BUILD</th>
                                             <th>DETAILS</th>
@@ -216,7 +216,7 @@ def NotifyEmail() {
                                          <th align="left"><strong>BUILD SUCCESS</strong></th>
                                       </tr>
                                     </table>
-                                    <p><strong>Build URL:</strong><a href="${BUILD_URL}input">click to approve</a></p>
+                                    <p><strong>Build URL:</strong><a href="${BUILD_URL}"</a></p>
                                     <p><strong>Project:</strong> ${currentBuild.fullDisplayName}</p>
                                     <p><strong>Date of Build:</strong> <span id="dtText"></span></p>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>CHANGES:</strong></p>
@@ -241,7 +241,7 @@ def NotifyEmail() {
                                           </tr>
                                     </table>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD INFORMATION:</strong></p>
-                                    <table id="customers" style="width:100%;border: 2px solid black;border-collapse: collapse;">
+                                    <table id="customers" style="width:100%;border: 2px solid black;border-collapse: separate;">
                                         <tr style="border: 2px solid black;background-color:blue;color:white;">
                                             <th id="tableheader" style="width:30%;border: 2px solid black;border-collapse: collapse;" >BUILD</th>
                                             <th>DETAILS</th>
