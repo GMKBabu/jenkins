@@ -92,7 +92,6 @@ pipeline{
                                     <p><strong>Build URL:</strong><a href="${BUILD_URL}input">click to approve</a></p>
                                     <p><strong>Project:</strong> ${currentBuild.fullDisplayName}</p>
                                     <p><strong>Date of Build:</strong> <span id="dtText"></span></p>
-                                    <p><strong>Build Duration:</strong> ${BUILD_DURATION}</p>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>CHANGES:</strong></p>
                                     <p> &#9658; <span id="Babu"></span></P>
                                     <script>
