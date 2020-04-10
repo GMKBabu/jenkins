@@ -77,11 +77,11 @@ pipeline{
                                     </tr>
                                     <tr>
                                         <td>Git_commit_Message</td>
-                                        <td>${GIT_COMMIT}</td>
+                                        <td>${env.GIT_COMMIT_MESSAGE}</td>
                                     </tr>
                                     <tr>
                                         <td>Git_commit_ID:</td>
-                                        <td>${GIT_COMMIT_HASH}</td>
+                                        <td>${env.GIT_COMMIT_HASH}</td>
                                     </tr>
                                     <tr>
                                        <td>URL:</td>
