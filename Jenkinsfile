@@ -54,7 +54,8 @@ pipeline{
                        echo "env.BUILD_USER_LAST_NAME=${env.BUILD_USER_LAST_NAME}"
                        echo "env.BUILD_USER_ID=${env.BUILD_USER_ID}"
                        echo "env.BUILD_USER_EMAIL=${env.BUILD_USER_EMAIL}"
-              }
+                   }
+               }
             }
         }
         stage("Source Code Checkout"){
