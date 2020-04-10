@@ -41,11 +41,14 @@ pipeline{
     stages{
         stage("show_user_name") {
             steps {
+                echo "BUILD_USER=${BUILD_USER}"
+                /*
                 script {
                     wrap([$class: 'BuildUser']) {
                         echo "BUILD_USER=${BUILD_USER}"
                     }
                 }
+                */
             }
         }
         stage("Source Code Checkout"){
