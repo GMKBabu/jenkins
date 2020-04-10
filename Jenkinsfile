@@ -129,7 +129,7 @@ pipeline{
                                     <p><strong>Build URL:</strong><a href="${BUILD_URL}input">click to approve</a></p>
                                     <p><strong>Project:</strong> ${currentBuild.fullDisplayName}</p>
                                     <p><strong>Project:</strong> ${JOB_NAME}</p>
-                                    <p><strong>Date of Build:</strong> <span id="dtText"></span></p>
+                                    <p><strong>Date of Build:</strong> <span id="dtText"></span> ${BUILD_TIMESTAMP}</p>
                                     <p><strong>Build Duration:</strong> ${currentBuild.durationString}</p>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>CHANGES:</strong></p>
                                     <p> &#9658; ${GIT_COMMIT_MESSAGE}</P>
@@ -263,7 +263,7 @@ def NotifyEmail() {
                                     <p><strong>Build URL: </strong> ${BUILD_URL}</p>
                                     <p><strong>Project:</strong> ${currentBuild.fullDisplayName}</p>
                                     <p><strong>Project:</strong> ${JOB_NAME}</p>
-                                    <p><strong>Date of Build:</strong> <span id="dtText"></span></p>
+                                    <p><strong>Date of Build:</strong> <span id="dtText"></span> ${BUILD_TIMESTAMP}</p>
                                     <p><strong>Build Duration:</strong> ${currentBuild.durationString}</p>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>CHANGES:</strong></p>
                                     <p> &#9658; ${GIT_COMMIT_MESSAGE}</P>
