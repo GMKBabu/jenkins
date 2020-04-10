@@ -114,9 +114,9 @@ pipeline{
                                           </tr>
                                     </table>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD INFORMATION:</strong></p>
-                                    <table id="customers" style="width:100%;solid black; border=2 cellspacing=2 cellpadding=2 width="40%"">
+                                    <table id="customers" style="width:100%;border: 2px solid black;border-collapse: collapse;">
                                         <tr style="border: 2px solid black;background-color:blue;color:white;">
-                                            <th id="tableheader" style="width:30%;border: 1px solid black;border-collapse: collapse;" >BUILD</th>
+                                            <th id="tableheader" style="width:30%;border: 2px solid black;border-collapse: collapse;" >BUILD</th>
                                             <th>DETAILS</th>
                                         </tr>
                                         <tr>
@@ -182,7 +182,7 @@ pipeline{
     }
 }
 def NotifyEmail() {
-            emailext (
+        emailext mimeType: 'text/html',
                    to: "babu.g3090@gmail.com",
                    subject: "Status: ${currentBuild.result}",
                    attachLog: true,
@@ -241,9 +241,9 @@ def NotifyEmail() {
                                           </tr>
                                     </table>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD INFORMATION:</strong></p>
-                                    <table id="customers" style="width:100%;solid black; border=2 cellspacing=2 cellpadding=2 width="40%"">
+                                    <table id="customers" style="width:100%;border: 2px solid black;border-collapse: collapse;">
                                         <tr style="border: 2px solid black;background-color:blue;color:white;">
-                                            <th id="tableheader" style="width:30%;border: 1px solid black;border-collapse: collapse;" >BUILD</th>
+                                            <th id="tableheader" style="width:30%;border: 2px solid black;border-collapse: collapse;" >BUILD</th>
                                             <th>DETAILS</th>
                                         </tr>
                                         <tr>
@@ -268,5 +268,4 @@ def NotifyEmail() {
                                         </tr>
                                     </table>
                                 </body>"""
-                )
 }
