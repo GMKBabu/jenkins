@@ -216,7 +216,7 @@ def NotifyEmail() {
                                          <th align="left"><strong>BUILD SUCCESS</strong></th>
                                       </tr>
                                     </table>
-                                    <p><strong>Build URL:</strong><a href="${BUILD_URL}"</a></p>
+                                    <p><strong>Build URL:</strong><a href='${BUILD_URL}'</a></p>
                                     <p><strong>Project:</strong> ${currentBuild.fullDisplayName}</p>
                                     <p><strong>Date of Build:</strong> <span id="dtText"></span></p>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>CHANGES:</strong></p>
