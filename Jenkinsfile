@@ -54,52 +54,94 @@ pipeline{
                // GIT_COMMIT_MESSAGE = sh (script: "git log -n 1 --pretty=format:'%s'", returnStdout: true)
                 echo "git commit id ${GIT_COMMIT_HASH}"
                 echo "git commit message ${GIT_COMMIT_MESSAGE}"
+                echo "git commit author ${GIT_COMMIT_AUTHOR}"
                 emailext mimeType: 'text/html',
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
                          attachLog: true,
                          body: """<style>
-                            body, table, td, th, p {
-                                font-family:verdana,helvetica,sans serif;
-                                font-size:11px;
-                                color:black;
-                                }
-                            td.bg1 { color:white; background-color:#595959; font-size:120% }
-                            td.console { font-family:courier new, lucida console; }
-                            </style>
-                            <body>
-                                <table border=2 cellspacing=2 cellpadding=2 width="40%">
-                                    <tr>
-                                        <td align="left" width="40%">
-                                           <b style="font-size: 170%;">GMKBabu</b>
-                                        </td>
-                                        <td valign="center" width="60%">
-                                           <b style="font-size: 150%;">CICD Pipeline Information</b>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>JobName:</td>
-                                        <td>${JOB_NAME}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Git_commit_Message</td>
-                                        <td>${GIT_COMMIT_MESSAGE}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Git_commit_Author:</td>
-                                        <td>${GIT_COMMIT_AUTHOR}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Git_commit_ID:</td>
-                                        <td>${GIT_COMMIT_HASH}</td>
-                                    </tr>
-                                    <tr>
-                                       <td>Approval URL:</td>
-                                       <td><a href="${BUILD_URL}input">click to approve</a></td>
-                                    </tr>
-                                </table>
-                              <br />
-                            </body>"""
+                                     #customers td, #customers th {
+                                         border: 1px solid black;
+                                         padding: 6px;
+                                         border-collapse: collapse;
+                                         }
+                                      #tableheader th {
+                                          font-weight: bold;
+                                          }
+                                      .footer {
+                                          position: fixed;
+                                          left: 30;
+                                          right: 60;
+                                          bottom: 20;
+                                          width: 20%;
+                                          color: black;
+                                          text-align: left;
+                                          }
+                                    body{        
+                                        padding-bottom: 400px;
+                                        }
+                                    </style>
+                                    </head>
+                                    <body>
+                                    <table>
+                                      <tr style="background-color:white;color:black;">
+                                         <th width="10"><img src="http://i.imgur.com/uXlqCxW.gif" alt="Smiley face" height="30" width="30"></th>
+                                         <th align="left"><strong>BUILD SUCCESS</strong></th>
+                                      </tr>
+                                    </table>
+                                    <p><strong>Build URL:</strong><a href="${BUILD_URL}input">click to approve</a></p>
+                                    <p><strong>Project:</strong> ${PROJECT_NAME}</p>
+                                    <p><strong>Date of Build:</strong> <span id="dtText"></span></p>
+                                    <p><strong>Build Duration:</strong> ${BUILD_DURATION}</p>
+                                    <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>CHANGES:</strong></p>
+                                    <p> &#9658; <span id="Babu"></span></P>
+                                    <script>
+                                       var y=10;
+                                       var x=10;
+                                       if ( x == y ) {
+                                             document.getElementById('Babu').innerHTML="No changes";
+                                                } else {
+                                                     document.getElementById('Babu').innerHTML="${GIT_COMMIT_MESSAGE}";
+                                        }
+                                    </script>
+                                    <script>
+                                         var today = new Date();
+                                         document.getElementById('dtText').innerHTML=""+today;</script>
+                                         <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD ARTIFACTS:</strong></p>
+                                    <table>
+                                          <tr style="background-color:white;color:black;">
+                                              <th>&#9658;</th>
+                                              <th style="text-decoration: underline;color:blue;"><strong><a href="279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}"</a>279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}</strong></th>
+                                          </tr>
+                                    </table>
+                                    <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD INFORMATION:</strong></p>
+                                    <table id="customers" style="width:100%;border: 1px solid black;border-collapse: collapse;">
+                                        <tr style="border: 2px solid black;background-color:blue;color:white;">
+                                            <th id="tableheader" style="width:30%;border: 1px solid black;border-collapse: collapse;" >BUILD</th>
+                                            <th>DETAILS</th>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Commit ID:</strong></td>
+                                            <td>${GIT_COMMIT_HASH}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Commit Author:</strong></td
+                                            <td>${GIT_COMMIT_AUTHOR}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Last Successfull Commit:</strong></td>
+                                            <td>sfsnfsfsncnjsjhfhlqwdllkdjasdhdw</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Build Number:</strong></td>
+                                            <td>${currentBuild.fullDisplayName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Triggered by:</strong></td>
+                                            <td>babu</td>
+                                        </tr>
+                                    </table>
+                                </body>"""
                 def userInput = input id: 'userInput',
                           message: 'Let\'s promote?', 
                           submitterParameter: 'submitter',
@@ -116,7 +158,9 @@ pipeline{
         stage("Deploy") {
             steps{
                 // uses https://plugins.jenkins.io/lockable-resources
-                 echo 'Deploying...'
+                lock(resource: 'deployApplication') {
+                    echo 'Deploying...'
+                }
             }
         }
     }
