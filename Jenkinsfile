@@ -86,7 +86,7 @@ pipeline{
                                     <table>
                                       <tr style="background-color:white;color:black;">
                                          <th width="10"><img src="http://i.imgur.com/uXlqCxW.gif" alt="Smiley face" height="30" width="30"></th>
-                                         <th align="left"><strong>BUILD SUCCESS</strong></th>
+                                         <th align="left"><strong>BUILD APPROVAL</strong></th>
                                       </tr>
                                     </table>
                                     <p><strong>Build URL:</strong><a href="${BUILD_URL}input">click to approve</a></p>
