@@ -39,6 +39,15 @@ pipeline{
     }
     // Pipeline stages
     stages{
+        stage("show_user_name") {
+            steps {
+                script {
+                    wrap([$class: 'BuildUser']) {
+                        echo "BUILD_USER=${BUILD_USER}"
+                    }
+                }
+            }
+        }
         stage("Source Code Checkout"){
             steps{
                 echo "========executing Source Code Checkout========"
