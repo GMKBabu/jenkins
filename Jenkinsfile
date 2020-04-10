@@ -57,7 +57,7 @@ pipeline{
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
                          attachLog: true,
-                         body: '''<style>
+                         body: """<style>
                             body, table, td, th, p {
                                 font-family:verdana,helvetica,sans serif;
                                 font-size:11px;
@@ -94,7 +94,7 @@ pipeline{
                                     </tr>
                                 </table>
                               <br />
-                            </body>'''
+                            </body>"""
                 def userInput = input id: 'userInput',
                           message: 'Let\'s promote?', 
                           submitterParameter: 'submitter',
