@@ -52,13 +52,26 @@ pipeline{
         }
         stage("Source Code Checkout"){
             steps{
-                echo "========executing Source Code Checkout========"
-                // using for checkout the code from bitbucket
-                checkout([$class: 'GitSCM', branches: [[name: "*/${GITHUB_BRANCH_NAME}"]],doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], \
-                   userRemoteConfigs: [[credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_URL}"]]])
                 script {
+                    echo "========executing Source Code Checkout========"
+                    // using for checkout the code from bitbucket
+                    def scmVars = checkout([$class: 'GitSCM', branches: [[name: "*/${GITHUB_BRANCH_NAME}"]],doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], \
+                         userRemoteConfigs: [[credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_URL}"]]])
+                    
+                    scmRevisionNumber = scmVars.GIT_COMMIT
+                    scmPreviousCommit = scmVars.GIT_PREVIOUS_COMMIT
+                    scmPreviousSuccessfulCommit = scmVars.GIT_PREVIOUS_SUCCESSFUL_COMMIT
+
+                    currentBuild.description = "this is for testing"
                     currentBuild.displayName = "${CUSTOM_BUILD_NUMBER}"
-                    }
+
+                }
+
+                println("GitHub Revision Number = ${scmRevisionNumber}")
+                println("GitHub Revion Message = ${GIT_COMMIT_MESSAGE}")
+                println("GitHub Author email = ${GIT_COMMIT_AUTHOR}")
+                println("previous commit = ${scmPreviousCommit}")
+                println("last successful Commit  = ${scmPreviousSuccessfulCommit}")
             }
         }
 
@@ -82,7 +95,10 @@ pipeline{
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
                          attachLog: true,
-                         body: """<style>
+                         body: """<!DOCTYPE html>
+                               <html>
+                               <head> 
+                                  <style>
                                      #customers td, #customers th {
                                          border: 1px solid black;
                                          padding: 6px;
@@ -114,18 +130,11 @@ pipeline{
                                     </table>
                                     <p><strong>Build URL:</strong><a href="${BUILD_URL}input">click to approve</a></p>
                                     <p><strong>Project:</strong> ${currentBuild.fullDisplayName}</p>
+                                    <p><strong>Project:</strong> ${JOB_NAME}</p>
                                     <p><strong>Date of Build:</strong> <span id="dtText"></span></p>
+                                    <p><strong>Build Duration:</strong> ${currentBuild.durationString}</p>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>CHANGES:</strong></p>
-                                    <p> &#9658; <span id="Babu"></span></P>
-                                    <script>
-                                       var y=10;
-                                       var x=10;
-                                       if ( x == y ) {
-                                             document.getElementById('Babu').innerHTML="No changes";
-                                                } else {
-                                                     document.getElementById('Babu').innerHTML="${GIT_COMMIT_MESSAGE}";
-                                        }
-                                    </script>
+                                    <p> &#9658; ${GIT_COMMIT_MESSAGE}</P>
                                     <script>
                                          var today = new Date();
                                          document.getElementById('dtText').innerHTML=""+today;</script>
@@ -151,8 +160,12 @@ pipeline{
                                             <td>${GIT_COMMIT_AUTHOR}</td>
                                         </tr>
                                         <tr>
+                                            <td><strong>Previous Commit:</strong></td>
+                                            <td>${scmPreviousCommit}</td>
+                                        </tr>
+                                        <tr>
                                             <td><strong>Last Successfull Commit:</strong></td>
-                                            <td>sfsnfsfsncnjsjhfhlqwdllkdjasdhdw</td>
+                                            <td>${scmPreviousSuccessfulCommit}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Build Number:</strong></td>
@@ -163,7 +176,14 @@ pipeline{
                                             <td>${env.BUILD_USER}</td>
                                         </tr>
                                     </table>
-                                </body>"""
+                                </body>
+                                <div class="footer">
+                                <footer>
+                                  <p><strong>thanks</strong></p>
+                                  <p>DevOps Team</p>
+                                </footer>
+                                </div>
+                                </html>"""
                 def userInput = input id: 'userInput',
                           message: 'Let\'s promote?', 
                           submitterParameter: 'submitter',
@@ -209,7 +229,10 @@ def NotifyEmail() {
                    to: "babu.m@connectio.co.in",
                    subject: "Status: ${currentBuild.result}",
                    attachLog: true,
-                   body: """<style>
+                   body: """<!DOCTYPE html>
+                               <html>
+                               <head>      
+                                 <style>
                                      #customers td, #customers th {
                                          border: 1px solid black;
                                          padding: 6px;
@@ -241,18 +264,11 @@ def NotifyEmail() {
                                     </table>
                                     <p><strong>Build URL: </strong> ${BUILD_URL}</p>
                                     <p><strong>Project:</strong> ${currentBuild.fullDisplayName}</p>
+                                    <p><strong>Project:</strong> ${JOB_NAME}</p>
                                     <p><strong>Date of Build:</strong> <span id="dtText"></span></p>
+                                    <p><strong>Build Duration:</strong> ${currentBuild.durationString}</p>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>CHANGES:</strong></p>
-                                    <p> &#9658; <span id="Babu"></span></P>
-                                    <script>
-                                       var y=10;
-                                       var x=10;
-                                       if ( x == y ) {
-                                             document.getElementById('Babu').innerHTML="No changes";
-                                                } else {
-                                                     document.getElementById('Babu').innerHTML="${GIT_COMMIT_MESSAGE}";
-                                        }
-                                    </script>
+                                    <p> &#9658; ${GIT_COMMIT_MESSAGE}</P>
                                     <script>
                                          var today = new Date();
                                          document.getElementById('dtText').innerHTML=""+today;</script>
@@ -278,6 +294,14 @@ def NotifyEmail() {
                                             <td>${GIT_COMMIT_AUTHOR}</td>
                                         </tr>
                                         <tr>
+                                            <td><strong>Previous Commit:</strong></td>
+                                            <td>${scmPreviousCommit}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Last Successfull Commit:</strong></td>
+                                            <td>${scmPreviousSuccessfulCommit}</td>
+                                        </tr>
+                                        <tr>
                                             <td><strong>Build Number:</strong></td>
                                             <td>${currentBuild.fullDisplayName}</td>
                                         </tr>
@@ -290,5 +314,12 @@ def NotifyEmail() {
                                             <td>test</td>
                                         </tr>
                                     </table>
-                                </body>"""
+                                </body> 
+                                <div class="footer">
+                                <footer>
+                                  <p><strong>thanks</strong></p>
+                                  <p>DevOps Team</p>
+                                </footer>
+                                </div>
+                                </html>"""
 }
