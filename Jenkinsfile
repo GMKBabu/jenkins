@@ -43,9 +43,7 @@ pipeline{
             steps {
             script {
                    wrap([$class: 'BuildUser']) {
-                       echo "BUILD_USER=${BUILD_USER}"
-                       echo "---"
-                       echo "env.BUILD_USER=${env.BUILD_USER}"
+                       GIT_BUILD_USER = sh ( script: 'echo "${BUILD_USER}"', returnStdout: true).trim()
                    }
                }
             }
@@ -173,7 +171,7 @@ pipeline{
                                         </tr>
                                         <tr>
                                             <td><strong>Triggered by:</strong></td>
-                                            <td>${env.BUILD_USER}</td>
+                                            <td>${GIT_BUILD_USER}</td>
                                         </tr>
                                     </table>
                                 </body>
@@ -307,7 +305,7 @@ def NotifyEmail() {
                                         </tr>
                                         <tr>
                                             <td><strong>Triggered by:</strong></td>
-                                            <td>${env.BUILD_USER}</td>
+                                            <td>${GIT_BUILD_USER}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Approved by:</strong></td>
