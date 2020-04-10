@@ -77,6 +77,10 @@ pipeline{
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>JobName:</td>
+                                        <td>${JOB_NAME}</td>
+                                    </tr>
+                                    <tr>
                                         <td>Git_commit_Message</td>
                                         <td>${GIT_COMMIT_MESSAGE}</td>
                                     </tr>
@@ -87,10 +91,6 @@ pipeline{
                                     <tr>
                                        <td>URL:</td>
                                        <td><a href="${BUILD_URL}input">click to approve</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>JobName:</td>
-                                        <td>${JOB_NAME}</td>
                                     </tr>
                                 </table>
                               <br />
