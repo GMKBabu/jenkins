@@ -1,3 +1,15 @@
+/*
+
+Build User Vars Plugin
+
+It gives you the following variables:
+
+BUILD_USER – full name of user started build,
+BUILD_USER_FIRST_NAME – first name of user started build,
+BUILD_USER_LAST_NAME – last name of user started build,
+BUILD_USER_ID – id of user started build.
+
+*/
 pipeline{
     agent{
         label "master"
@@ -137,7 +149,7 @@ pipeline{
                                         </tr>
                                         <tr>
                                             <td><strong>Triggered by:</strong></td>
-                                            <td>babu</td>
+                                            <td>${BUILD_USER}</td>
                                         </tr>
                                     </table>
                                 </body>"""
@@ -260,7 +272,7 @@ def NotifyEmail() {
                                         </tr>
                                         <tr>
                                             <td><strong>Triggered by:</strong></td>
-                                            <td>babu</td>
+                                            <td>${BUILD_USER}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Approved by:</strong></td>
