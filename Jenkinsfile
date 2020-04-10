@@ -10,6 +10,7 @@ pipeline{
         CUSTOM_BUILD_NUMBER = "DEV-PRD-${BUILD_NUMBER}"
         GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
         GIT_COMMIT_MESSAGE = sh (script: "git log -n 1 --pretty=format:'%s'", returnStdout: true)
+        GIT_COMMIT_AUTHOR = sh (script: "git log -n 1 --pretty=format:'%an'", returnStdout: true)
     }
     parameters {
         string (name: 'GITHUB_BRANCH_NAME', defaultValue: 'master', description: 'Git branch to build')
@@ -85,11 +86,15 @@ pipeline{
                                         <td>${GIT_COMMIT_MESSAGE}</td>
                                     </tr>
                                     <tr>
+                                        <td>Git_commit_Author:</td>
+                                        <td>${GIT_COMMIT_AUTHOR}</td>
+                                    </tr>
+                                    <tr>
                                         <td>Git_commit_ID:</td>
                                         <td>${GIT_COMMIT_HASH}</td>
                                     </tr>
                                     <tr>
-                                       <td>URL:</td>
+                                       <td>Approval URL:</td>
                                        <td><a href="${BUILD_URL}input">click to approve</a></td>
                                     </tr>
                                 </table>
