@@ -53,10 +53,12 @@ pipeline{
                // GIT_COMMIT_MESSAGE = sh (script: "git log -n 1 --pretty=format:'%s'", returnStdout: true)
                 echo "git commit id ${GIT_COMMIT_HASH}"
                 echo "git commit message ${GIT_COMMIT_MESSAGE}"
-                emailext mimeType: 'text/html',
+                //emailext mimeType: 'text/html',
+                emailext (
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
-                         body: '''<style>
+                         attachLog: true,
+                         body: """<style>
                             body, table, td, th, p {
                                 font-family:verdana,helvetica,sans serif;
                                 font-size:11px;
@@ -77,11 +79,11 @@ pipeline{
                                     </tr>
                                     <tr>
                                         <td>Git_commit_Message</td>
-                                        <td>${env.GIT_COMMIT_MESSAGE}</td>
+                                        <td>${GIT_COMMIT_MESSAGE}</td>
                                     </tr>
                                     <tr>
                                         <td>Git_commit_ID:</td>
-                                        <td>${env.GIT_COMMIT_HASH}</td>
+                                        <td>${GIT_COMMIT_HASH}</td>
                                     </tr>
                                     <tr>
                                        <td>URL:</td>
@@ -93,7 +95,8 @@ pipeline{
                                     </tr>
                                 </table>
                               <br />
-                            </body>'''
+                            </body>"""
+                )
                 def userInput = input id: 'userInput',
                           message: 'Let\'s promote?', 
                           submitterParameter: 'submitter',
