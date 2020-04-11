@@ -200,6 +200,7 @@ pipeline{
                 // uses https://plugins.jenkins.io/lockable-resources
                 lock(resource: 'deployApplication') {
                     echo 'Deploying...'
+                    echo "approval name ${BUILD_APPROVAL_NAME}"
                 }
             }
         }
