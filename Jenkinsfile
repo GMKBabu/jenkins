@@ -1,15 +1,3 @@
-/*
-
-Build User Vars Plugin
-
-It gives you the following variables:
-
-BUILD_USER – full name of user started build,
-BUILD_USER_FIRST_NAME – first name of user started build,
-BUILD_USER_LAST_NAME – last name of user started build,
-BUILD_USER_ID – id of user started build.
-
-*/
 pipeline{
     agent{
         label "master"
@@ -17,9 +5,14 @@ pipeline{
     environment {
         GITHUB_URL = "https://github.com/GMKBabu/jenkins.git"
         GITHUB_CREDENTIALS = "cdb56ac9-d618-4df0-a85f-c41eb9647ef3"
-        CUSTOM_TAG = "${COMMIT_ID}"
+        DOCKERHUB_CREDENTIALS = "DockerHub"
+        DOCKERHUB_REPOSITORY_URL = "https://registry.hub.docker.com"
+        CUSTOM_TAG = "${BUILD_NUMBER}"
+        IMAGE_REPO_NAME = "gmkbabu/test-cicd"
         IMAGE_NAME = "${IMAGE_REPO_NAME}:${CUSTOM_TAG}"
         CUSTOM_BUILD_NUMBER = "DEV-PRD-${BUILD_NUMBER}"
+        ID = "cicd"
+        TEST_LOCAL_PORT = "80"
         GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
         GIT_COMMIT_MESSAGE = sh (script: "git log -n 1 --pretty=format:'%s'", returnStdout: true)
         GIT_COMMIT_AUTHOR = sh (script: "git log -n 1 --pretty=format:'%an'", returnStdout: true)
@@ -73,10 +66,56 @@ pipeline{
             }
         }
 
-        stage("Build Docker Image"){
-            steps{
-                echo "====executing Build Docker Image===="
+        stage("Build Docker Image and Test"){
+            parallel {
+                //Docker Image Build
+                stage("Docker Image Build") {
+                    steps {
+                        echo "====executing Build Docker Image===="
+                        sh "docker build -t $IMAGE_NAME  ${WORKSPACE}/."
+                    }
+                }
 
+                //Run Docker Container through docker image
+                stage("Docker Container") {
+                    steps {
+                        echo "====executing Build Docker Image TO Container===="
+                        // Kill container in case there is a leftover
+                        sh "[ -z \"\$(docker ps -a | grep ${ID} 2>/dev/null)\" ] || docker rm -f ${ID}"
+
+                        echo "Starting ${IMAGE_REPO_NAME} container"
+                        sh "docker run --detach --name ${ID} --rm --publish ${TEST_LOCAL_PORT}:80 ${IMAGE_NAME}"
+                    }
+                }
+
+                //Docker Container Local Test
+                stage("Local Test Docker Container") {
+                    steps {
+                        sh '''
+                            host_ip=$(hostname -i)
+				            curl -aG http://$host_ip:80
+				        '''
+                    }
+                }
+            }
+        }
+
+        stage("Push Image to Docker Hub") {
+            parallel {
+                stage("Stop Docker Container") {
+                    steps {
+                        echo "Stop the Docker Container"
+                        sh 'docker stop "${ID}"'
+                    }
+                }
+                stage("Push Docker Image to Docker Hub"){
+                    steps {
+                        withDockerRegistry(credentialsId: "${DOCKERHUB_CREDENTIALS}", url: "${DOCKERHUB_REPOSITORY_URL}") {
+                            echo "====++++Push Docker Image to Docker Hub++++===="
+                            sh 'docker push "${IMAGE_NAME}"'
+                        }
+                    }
+                }
             }
         }
 
@@ -200,7 +239,7 @@ pipeline{
                 // uses https://plugins.jenkins.io/lockable-resources
                 lock(resource: 'deployApplication') {
                     echo 'Deploying...'
-                    echo "approval name ${BUILD_APPROVAL_NAME}"
+                    echo "approval name ${APPROVAL_NAME}"
                 }
             }
         }
