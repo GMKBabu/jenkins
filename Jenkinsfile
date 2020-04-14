@@ -19,6 +19,7 @@ pipeline{
     }
     parameters {
         string (name: 'GITHUB_BRANCH_NAME', defaultValue: 'master', description: 'Git branch to build')
+        booleanParam (name: 'DEPLOY_TO_PROD', defaultValue: false, description: 'If build and tests are good, proceed and deploy to production without manual approval')
     }
     triggers {
         //Run Polling of GitHub every minute everyday of the week
@@ -179,7 +180,7 @@ pipeline{
                                     <table>
                                           <tr style="background-color:white;color:black;">
                                               <th>&#9658;</th>
-                                              <th style="text-decoration: underline;color:blue;"><strong><a href="279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}">279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}</a></strong></th>
+                                              <th style="text-decoration: underline;color:blue;"><strong><a href="https://hub.docker.com/repository/docker/gmkbabu/test-cicd:${BUILD_NUMBER}">https://hub.docker.com/repository/docker/gmkbabu/test-cicd:${BUILD_NUMBER}</a></strong></th>
                                           </tr>
                                     </table>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD INFORMATION:</strong></p>
@@ -226,20 +227,25 @@ pipeline{
                           submitterParameter: 'submitter',
                           submitter: 'GMKBabu',
                           parameters: [
-                              [$class: 'TextParameterDefinition', defaultValue: 'prod', description: 'Environment', name: 'env'],
+                              [$class: 'TextParameterDefinition', defaultValue: 'false', description: 'Environment', name: 'DEPLOY_TO_PROD'],
                               [$class: 'TextParameterDefinition', defaultValue: 'k8s', description: 'Target', name: 'target']]
-                echo ("Env: "+userInput['env'])
+                echo ("Env: "+userInput['DEPLOY_TO_PROD'])
                 echo ("Target: "+userInput['target'])
                 echo ("submitted by: "+userInput['submitter'])
              }
             }
         }
         stage("Deploy") {
+            when {
+                allOf {
+                    environment name: 'GITHUB_BRANCH_NAME', value: 'master'
+                    environment name: 'DEPLOY_TO_PROD', value: 'true'
+                }
+            }
             steps{
                 // uses https://plugins.jenkins.io/lockable-resources
                 lock(resource: 'deployApplication') {
                     echo 'Deploying...'
-                    echo "approval name ${APPROVAL_NAME}"
                 }
             }
         }
@@ -314,7 +320,7 @@ def NotifyEmail() {
                                     <table>
                                           <tr style="background-color:white;color:black;">
                                               <th>&#9658;</th>
-                                              <th style="text-decoration: underline;color:blue;"><strong><a href="279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}">279944003491.dkr.ecr.eu-west-1.amazonaws.com/kubernates:${BUILD_NUMBER}</a></strong></th>
+                                              <th style="text-decoration: underline;color:blue;"><strong><a href="https://hub.docker.com/repository/docker/gmkbabu/test-cicd:${BUILD_NUMBER}">https://hub.docker.com/repository/docker/gmkbabu/test-cicd:${BUILD_NUMBER}</a></strong></th>
                                           </tr>
                                     </table>
                                     <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD INFORMATION:</strong></p>
