@@ -6,7 +6,7 @@ pipeline{
         GITHUB_URL = "https://github.com/GMKBabu/jenkins.git"
         GITHUB_CREDENTIALS = "cdb56ac9-d618-4df0-a85f-c41eb9647ef3"
         DOCKERHUB_CREDENTIALS = "DockerHub"
-        DOCKERHUB_REPOSITORY_URL = "https://registry.hub.docker.com"
+        DOCKERHUB_REPOSITORY_URL = "https://index.docker.io/v1/"
         CUSTOM_TAG = "${BUILD_NUMBER}"
         IMAGE_REPO_NAME = "gmkbabu/test-cicd"
         IMAGE_NAME = "${IMAGE_REPO_NAME}:${CUSTOM_TAG}"
