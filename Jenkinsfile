@@ -19,7 +19,7 @@ pipeline{
     }
     parameters {
         string (name: 'GITHUB_BRANCH_NAME', defaultValue: 'master', description: 'Git branch to build')
-        booleanParam (name: 'DEPLOY_TO_PROD', defaultValue: false, description: 'If build and tests are good, proceed and deploy to production without manual approval')
+        //booleanParam (name: 'DEPLOY_TO_PROD', defaultValue: false, description: 'If build and tests are good, proceed and deploy to production without manual approval')
     }
     triggers {
         //Run Polling of GitHub every minute everyday of the week
