@@ -230,7 +230,7 @@ pipeline{
                               [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Environment', name: 'DEPLOY_TO_PROD'],
                               [$class: 'TextParameterDefinition', defaultValue: 'k8s', description: 'Target', name: 'target']]
                 
-                echo ("DEPLOY_TO_PROD: "+userInput['DEPLOY_TO_PROD'])
+                echo ("env.DEPLOY_TO_PROD: "+userInput['DEPLOY_TO_PROD'])
                 echo ("Target: "+userInput['target'])
                 echo ("submitted by: "+userInput['submitter'])
              }
