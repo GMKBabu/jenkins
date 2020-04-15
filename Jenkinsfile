@@ -303,8 +303,15 @@ def NotifyEmail() {
                                     <body>
                                     <table>
                                       <tr style="background-color:white;color:black;">
-                                         <th width="10"><img src="http://i.imgur.com/uXlqCxW.gif" alt="Smiley face" height="30" width="30"></th>
-                                         <th align="left"><strong>BUILD ${currentBuild.result}</strong></th>
+                                      <script>
+                                        if ( currentBuild.result = "SUCCESS" ) {
+                                              <th width="10"><img src="http://i.imgur.com/uXlqCxW.gif" alt="Smiley face" height="30" width="30"></th>
+                                              <th align="left"><strong>BUILD SUCCESS</strong></th>
+                                         } else {
+                                              <th width="10"><img src="http://i.imgur.com/LUveOg7.gif" alt="Smiley face" height="30" width="30"></th>
+                                              <th align="left"><strong>BUILD FAILLED</strong></th>
+                                         }
+                                      </script>
                                       </tr>
                                     </table>
                                     <p><strong>Build URL: </strong> ${BUILD_URL}</p>
@@ -316,7 +323,8 @@ def NotifyEmail() {
                                     <p> &#9658; ${GIT_COMMIT_MESSAGE}</P>
                                     <script>
                                          var today = new Date();
-                                         document.getElementById('dtText').innerHTML=""+today;</script>
+                                         document.getElementById('dtText').innerHTML=""+today;
+                                    </script>
                                          <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD ARTIFACTS:</strong></p>
                                     <table>
                                           <tr style="background-color:white;color:black;">
