@@ -128,7 +128,95 @@ pipeline{
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
                          attachLog: true,
-                         body: '${FILE,path="${WORKSPACE}jenkins_build_approval.html"}'
+                         body: """<!DOCTYPE html>
+                               <html>
+                               <head> 
+                                  <style>
+                                     #customers td, #customers th {
+                                         border: 1px solid black;
+                                         padding: 6px;
+                                         border-collapse: collapse;
+                                         }
+                                      #tableheader th {
+                                          font-weight: bold;
+                                          }
+                                      .footer {
+                                          position: fixed;
+                                          left: 30;
+                                          right: 60;
+                                          bottom: 20;
+                                          width: 20%;
+                                          color: black;
+                                          text-align: left;
+                                          }
+                                    body{        
+                                        padding-bottom: 400px;
+                                        }
+                                    </style>
+                                    </head>
+                                    <body>
+                                    <table>
+                                      <tr style="background-color:white;color:black;">
+                                         <th width="10"><img src="http://i.imgur.com/uXlqCxW.gif" alt="Smiley face" height="30" width="30"></th>
+                                         <th align="left"><strong>BUILD APPROVAL</strong></th>
+                                      </tr>
+                                    </table>
+                                    <p><strong>Build URL:</strong><a href="${BUILD_URL}input">click to approve</a></p>
+                                    <p><strong>Project:</strong> ${currentBuild.fullDisplayName}</p>
+                                    <p><strong>Project:</strong> ${JOB_NAME}</p>
+                                    <p><strong>Date of Build:</strong> <span id="dtText"></span> ${BUILD_TIMESTAMP}</p>
+                                    <p><strong>Build Duration:</strong> ${currentBuild.durationString}</p>
+                                    <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>CHANGES:</strong></p>
+                                    <p> &#9658; ${GIT_COMMIT_MESSAGE}</P>
+                                    <script>
+                                         var today = new Date();
+                                         document.getElementById('dtText').innerHTML=""+today;</script>
+                                         <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD ARTIFACTS:</strong></p>
+                                    <table>
+                                          <tr style="background-color:white;color:black;">
+                                              <th>&#9658;</th>
+                                              <th style="text-decoration: underline;color:blue;"><strong><a href="https://hub.docker.com/repository/docker/gmkbabu/test-cicd:${BUILD_NUMBER}">https://hub.docker.com/repository/docker/gmkbabu/test-cicd:${BUILD_NUMBER}</a></strong></th>
+                                          </tr>
+                                    </table>
+                                    <p style="border: 0px solid black;background-color:blue;color:white;" bgcolor="blue"><strong>BUILD INFORMATION:</strong></p>
+                                    <table id="customers" style="width:100%;border: 2px solid black;border-collapse: separate;">
+                                        <tr style="border: 2px solid black;background-color:blue;color:white;">
+                                            <th id="tableheader" style="width:30%;border: 2px solid black;border-collapse: collapse;" >BUILD</th>
+                                            <th>DETAILS</th>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Commit ID:</strong></td>
+                                            <td>${GIT_COMMIT_HASH}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Commit Author:</strong></td
+                                            <td>${GIT_COMMIT_AUTHOR}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Previous Successfull Commit:</strong></td>
+                                            <td>${scmPreviousCommit}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Last Successfull Commit:</strong></td>
+                                            <td>${scmPreviousSuccessfulCommit}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Build Number:</strong></td>
+                                            <td>${currentBuild.fullDisplayName}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Triggered by:</strong></td>
+                                            <td>${GIT_BUILD_USER}</td>
+                                        </tr>
+                                    </table>
+                                </body>
+                                <div class="footer">
+                                <footer>
+                                  <p><strong>thanks</strong></p>
+                                  <p>DevOps Team</p>
+                                </footer>
+                                </div>
+                                </html>"""
                 def userInput = input id: 'userInput',
                           message: 'Let\'s promote?', 
                           submitterParameter: 'submitter',
@@ -170,33 +258,17 @@ pipeline{
 
                 currentBuild.result = "SUCCESS"
             }
-            NotifyEmailSuccess()
+            NotifyEmail()
         }
         failure{
             echo "========pipeline execution failed========"
             script {
                 currentBuild.result = "FAILURE"
             }
-            NotifyEmailFail()
+            NotifyEmail()
         }
     }
 }
-def NotifyEmailSuccess() {
-        emailext mimeType: 'text/html',
-                   to: "babu.m@connectio.co.in",
-                   subject: "Status: ${currentBuild.result}",
-                   attachLog: true,
-                   body: '${FILE,path="${WORKSPACE}jenkins_build_success.html"}'
-}
-
-def NotifyEmailFail() {
-        emailext mimeType: 'text/html',
-                   to: "babu.m@connectio.co.in",
-                   subject: "Status: ${currentBuild.result}",
-                   attachLog: true,
-                   body: '${FILE,path="${WORKSPACE}jenkins_build_failled.html"}'
-}
-/*
 def NotifyEmail() {
         emailext mimeType: 'text/html',
                    to: "babu.m@connectio.co.in",
@@ -304,4 +376,3 @@ def NotifyEmail() {
                                 </div>
                                 </html>"""
 }
-*/
