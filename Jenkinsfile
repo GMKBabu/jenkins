@@ -303,8 +303,8 @@ def NotifyEmail() {
                                     <body>
                                     <table>
                                       <script>
+                                      if ( ${currentBuild.result} == "SUCCESS" ) {
                                       <tr style="background-color:white;color:black;">
-                                        if ( ${currentBuild.result} == "SUCCESS" ) {
                                               <th width="10"><img src="http://i.imgur.com/uXlqCxW.gif" alt="Smiley face" height="30" width="30"></th>
                                               <th align="left"><strong>BUILD SUCCESS</strong></th>
                                          } else {
