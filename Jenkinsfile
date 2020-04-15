@@ -197,16 +197,8 @@ pipeline{
                                             <td>${scmPreviousCommit}</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Previous Successfull Build:</strong></td>
-                                            <td>${currentBuild.previousFailedBuild}</td>
-                                        </tr>
-                                        <tr>
                                             <td><strong>Last Successfull Commit:</strong></td>
                                             <td>${scmPreviousSuccessfulCommit}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Last Successfull Build:</strong></td>
-                                            <td>${currentBuild.previousSuccessfulBuild}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Build Number:</strong></td>
@@ -351,16 +343,8 @@ def NotifyEmail() {
                                             <td>${scmPreviousCommit}</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Previous Successfull Build:</strong></td>
-                                            <td>${currentBuild.previousFailedBuild}</td>
-                                        </tr>
-                                        <tr>
                                             <td><strong>Last Successfull Commit:</strong></td>
                                             <td>${scmPreviousSuccessfulCommit}</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Last Successfull Build:</strong></td>
-                                            <td>${currentBuild.previousSuccessfulBuild}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Build Number:</strong></td>
