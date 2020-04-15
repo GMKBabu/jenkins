@@ -128,7 +128,8 @@ pipeline{
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
                          attachLog: true,
-                         body: """<!DOCTYPE html>
+                         body: '${FILE,path="${WORKSPACE}/jenkins_build_approval.html"}'
+                         /*body: """<!DOCTYPE html>
                                <html>
                                <head> 
                                   <style>
@@ -216,7 +217,7 @@ pipeline{
                                   <p>DevOps Team</p>
                                 </footer>
                                 </div>
-                                </html>"""
+                                </html>"""*/
                 def userInput = input id: 'userInput',
                           message: 'Let\'s promote?', 
                           submitterParameter: 'submitter',
@@ -258,17 +259,31 @@ pipeline{
 
                 currentBuild.result = "SUCCESS"
             }
-            NotifyEmail()
+            NotifyEmailSuccess()
         }
         failure{
             echo "========pipeline execution failed========"
             script {
                 currentBuild.result = "FAILURE"
             }
-            NotifyEmail()
+            NotifyEmailFail()
         }
     }
 }
+def NotifyEmailSuccess() {
+        emailext mimeType: 'text/html',
+                   to: "babu.m@connectio.co.in",
+                   subject: "Status: ${currentBuild.result}",
+                   attachLog: true,
+                   body: '${FILE,path="${WORKSPACE}/jenkins_build_success.html"}'
+
+def NotifyEmailFail() {
+        emailext mimeType: 'text/html',
+                   to: "babu.m@connectio.co.in",
+                   subject: "Status: ${currentBuild.result}",
+                   attachLog: true,
+                   body: '${FILE,path="${WORKSPACE}/jenkins_build_failled.html"}'
+/*
 def NotifyEmail() {
         emailext mimeType: 'text/html',
                    to: "babu.m@connectio.co.in",
@@ -376,3 +391,4 @@ def NotifyEmail() {
                                 </div>
                                 </html>"""
 }
+*/
