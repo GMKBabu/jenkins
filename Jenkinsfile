@@ -302,8 +302,8 @@ def NotifyEmail() {
                                     </head>
                                     <body>
                                     <table>
-                                      <tr style="background-color:white;color:black;">
                                       <script>
+                                      <tr style="background-color:white;color:black;">
                                         if ( ${currentBuild.result} == "SUCCESS" ) {
                                               <th width="10"><img src="http://i.imgur.com/uXlqCxW.gif" alt="Smiley face" height="30" width="30"></th>
                                               <th align="left"><strong>BUILD SUCCESS</strong></th>
@@ -311,8 +311,8 @@ def NotifyEmail() {
                                               <th width="10"><img src="http://i.imgur.com/LUveOg7.gif" alt="Smiley face" height="30" width="30"></th>
                                               <th align="left"><strong>BUILD FAILLED</strong></th>
                                          }
-                                      </script>
                                       </tr>
+                                      </script>
                                     </table>
                                     <p><strong>Build URL: </strong> ${BUILD_URL}</p>
                                     <p><strong>Project:</strong> ${currentBuild.fullDisplayName}</p>
