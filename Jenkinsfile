@@ -124,11 +124,6 @@ pipeline{
             steps{
              script {
                 echo "====Waiting for Approval===="
-               // GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-               // GIT_COMMIT_MESSAGE = sh (script: "git log -n 1 --pretty=format:'%s'", returnStdout: true)
-                echo "git commit id ${GIT_COMMIT_HASH}"
-                echo "git commit message ${GIT_COMMIT_MESSAGE}"
-                echo "git commit author ${GIT_COMMIT_AUTHOR}"
                 emailext mimeType: 'text/html',
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
@@ -230,9 +225,12 @@ pipeline{
                               [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Environment', name: 'DEPLOY_TO_PROD'],
                               [$class: 'TextParameterDefinition', defaultValue: 'k8s', description: 'Target', name: 'target']]
                 
-                echo ("env.DEPLOY_TO_PROD: "+userInput['DEPLOY_TO_PROD'])
+                echo ("DEPLOY_TO_PROD: "+userInput['DEPLOY_TO_PROD'])
                 echo ("Target: "+userInput['target'])
                 echo ("submitted by: "+userInput['submitter'])
+
+                echo "test ${DEPLOY_TO_PROD}"
+             
              }
             }
         }
