@@ -193,12 +193,20 @@ pipeline{
                                             <td>${GIT_COMMIT_AUTHOR}</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Previous Commit:</strong></td>
+                                            <td><strong>Previous Successfull Commit:</strong></td>
                                             <td>${scmPreviousCommit}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Previous Successfull Build:</strong></td>
+                                            <td>${previousFailedBuild}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Last Successfull Commit:</strong></td>
                                             <td>${scmPreviousSuccessfulCommit}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Last Successfull Build:</strong></td>
+                                            <td>${previousSuccessfulBuild}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Build Number:</strong></td>
@@ -230,7 +238,7 @@ pipeline{
                 echo ("submitted by: "+userInput['submitter'])
 
                 env.DEPLOY_TO_PROD = userInput.DEPLOY_TO_PROD
-
+                env.BUILD_APPROVED = userInput.submitter
                 echo "Selected Environment: ${DEPLOY_TO_PROD}"
              }
             }
@@ -246,6 +254,7 @@ pipeline{
                 // uses https://plugins.jenkins.io/lockable-resources
                 lock(resource: 'deployApplication') {
                     echo 'Deploying...'
+
                 }
             }
         }
@@ -338,12 +347,20 @@ def NotifyEmail() {
                                             <td>${GIT_COMMIT_AUTHOR}</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Previous Commit:</strong></td>
+                                            <td><strong>Previous Successfull Commit:</strong></td>
                                             <td>${scmPreviousCommit}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Previous Successfull Build:</strong></td>
+                                            <td>${previousFailedBuild}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Last Successfull Commit:</strong></td>
                                             <td>${scmPreviousSuccessfulCommit}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Last Successfull Build:</strong></td>
+                                            <td>${previousSuccessfulBuild}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Build Number:</strong></td>
@@ -355,7 +372,7 @@ def NotifyEmail() {
                                         </tr>
                                         <tr>
                                             <td><strong>Approved by:</strong></td>
-                                            <td>test</td>
+                                            <td>${BUILD_APPROVED}</td>
                                         </tr>
                                     </table>
                                 </body> 
