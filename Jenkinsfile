@@ -226,11 +226,11 @@ pipeline{
                           message: 'Let\'s promote?', 
                           submitterParameter: 'submitter',
                           submitter: 'GMKBabu',
+                          env.DEPLOY_TO_PROD = input message: 'User input required',
                           parameters: [
                               [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Environment', name: 'DEPLOY_TO_PROD'],
                               [$class: 'TextParameterDefinition', defaultValue: 'k8s', description: 'Target', name: 'target']]
                 
-                DEPLOY_TO_PROD = userInput['DEPLOY_TO_PROD']
                 echo ("Env: "+userInput['DEPLOY_TO_PROD'])
                 echo ("Target: "+userInput['target'])
                 echo ("submitted by: "+userInput['submitter'])
