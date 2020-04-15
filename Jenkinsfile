@@ -222,7 +222,7 @@ pipeline{
                           submitterParameter: 'submitter',
                           submitter: 'GMKBabu',
                           parameters: [
-                              [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Environment', name: 'DEPLOY_TO_PROD']
+                              [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Environment', name: 'DEPLOY_TO_PROD']]
                 
                 echo ("DEPLOY_TO_PROD: "+userInput['DEPLOY_TO_PROD'])
                 echo ("submitted by: "+userInput['submitter'])
