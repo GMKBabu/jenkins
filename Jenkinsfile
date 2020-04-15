@@ -229,7 +229,7 @@ pipeline{
                 echo ("Target: "+userInput['target'])
                 echo ("submitted by: "+userInput['submitter'])
 
-                DEPLOY_TO_PROD = userInput.DEPLOY_TO_PROD
+                env.DEPLOY_TO_PROD = userInput.DEPLOY_TO_PROD
 
                 echo "Selected Environment: ${DEPLOY_TO_PROD}"
              }
