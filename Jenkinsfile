@@ -198,7 +198,7 @@ pipeline{
                                         </tr>
                                         <tr>
                                             <td><strong>Previous Successfull Build:</strong></td>
-                                            <td>${previousFailedBuild}</td>
+                                            <td>${currentBuild.previousFailedBuild}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Last Successfull Commit:</strong></td>
@@ -206,7 +206,7 @@ pipeline{
                                         </tr>
                                         <tr>
                                             <td><strong>Last Successfull Build:</strong></td>
-                                            <td>${previousSuccessfulBuild}</td>
+                                            <td>${currentBuild.previousSuccessfulBuild}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Build Number:</strong></td>
@@ -352,7 +352,7 @@ def NotifyEmail() {
                                         </tr>
                                         <tr>
                                             <td><strong>Previous Successfull Build:</strong></td>
-                                            <td>${previousFailedBuild}</td>
+                                            <td>${currentBuild.previousFailedBuild}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Last Successfull Commit:</strong></td>
@@ -360,7 +360,7 @@ def NotifyEmail() {
                                         </tr>
                                         <tr>
                                             <td><strong>Last Successfull Build:</strong></td>
-                                            <td>${previousSuccessfulBuild}</td>
+                                            <td>${currentBuild.previousSuccessfulBuild}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Build Number:</strong></td>
