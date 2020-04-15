@@ -234,7 +234,7 @@ pipeline{
                 echo ("Target: "+userInput['target'])
                 echo ("submitted by: "+userInput['submitter'])
                 script {
-                    env.DEPLOY_TO_PROD= userInput['DEPLOY_TO_PROD'],
+                    env.DEPLOY_TO_PROD= +userInput['DEPLOY_TO_PROD'],
                 }
              }
             }
