@@ -128,7 +128,7 @@ pipeline{
                          subject: "[Jenkins-Deploy-Approval]${currentBuild.fullDisplayName}",
                          to: "babu.g3090@gmail.com",
                          attachLog: true,
-                         body: '${FILE,path="${WORKSPACE}/jenkins_build_approval.html"}'
+                         body: '${FILE,path="${WORKSPACE}jenkins_build_approval.html"}'
                 def userInput = input id: 'userInput',
                           message: 'Let\'s promote?', 
                           submitterParameter: 'submitter',
@@ -186,7 +186,7 @@ def NotifyEmailSuccess() {
                    to: "babu.m@connectio.co.in",
                    subject: "Status: ${currentBuild.result}",
                    attachLog: true,
-                   body: '${FILE,path="${WORKSPACE}/jenkins_build_success.html"}'
+                   body: '${FILE,path="${WORKSPACE}jenkins_build_success.html"}'
 }
 
 def NotifyEmailFail() {
@@ -194,7 +194,7 @@ def NotifyEmailFail() {
                    to: "babu.m@connectio.co.in",
                    subject: "Status: ${currentBuild.result}",
                    attachLog: true,
-                   body: '${FILE,path="${WORKSPACE}/jenkins_build_failled.html"}'
+                   body: '${FILE,path="${WORKSPACE}jenkins_build_failled.html"}'
 }
 /*
 def NotifyEmail() {
