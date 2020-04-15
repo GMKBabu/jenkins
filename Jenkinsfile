@@ -226,7 +226,7 @@ pipeline{
                           message: 'Let\'s promote?', 
                           submitterParameter: 'submitter',
                           submitter: 'GMKBabu',
-                          env.DEPLOY_TO_PROD = input message: 'User input required',
+                          env.DEPLOY_TO_PROD = userInput: 'User input required',
                           parameters: [
                               [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Environment', name: 'DEPLOY_TO_PROD'],
                               [$class: 'TextParameterDefinition', defaultValue: 'k8s', description: 'Target', name: 'target']]
