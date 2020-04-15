@@ -233,7 +233,7 @@ pipeline{
                 echo ("Env: "+userInput['DEPLOY_TO_PROD'])
                 echo ("Target: "+userInput['target'])
                 echo ("submitted by: "+userInput['submitter'])
-                sh "env.DEPLOY_TO_PROD = input message: 'User input required'"
+                sh "env.DEPLOY_TO_PROD = +userInput['DEPLOY_TO_PROD']"
              }
             }
         }
